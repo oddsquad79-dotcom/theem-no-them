@@ -3,139 +3,156 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#09080d">
+  <meta name="theme-color" content="#11110f">
   <meta name="description" content="Jashan — ZeroOrder">
   <title>Jashan // ZeroOrder</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="grid"></div>
   <div class="scanlines"></div>
 
   <header class="topbar">
-    <a class="brand" href="#top"><span class="prompt">~/</span> ZEROORDER</a>
+    <a class="brand" href="#top">
+      <span class="brand-mark">◈</span>
+      <span>ZEROORDER</span>
+      <small>JSH-01</small>
+    </a>
+
     <nav>
       <a href="#about">about</a>
-      <a href="#specs">specs</a>
       <a href="#stack">stack</a>
-      <a href="#terminal">terminal</a>
+      <a href="#projects">projects</a>
+      <a href="#links">links</a>
     </nav>
-    <a class="discord-top" href="https://discord.com/users/1391256641340575784" target="_blank" rel="noopener" aria-label="Open Discord profile">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M19.54 5.02A16.8 16.8 0 0 0 15.4 3.7l-.5 1.03a15.4 15.4 0 0 0-5.8 0L8.6 3.7a16.8 16.8 0 0 0-4.14 1.32C1.84 9.1 1.13 13.08 1.49 17a16.9 16.9 0 0 0 5.08 2.58l1.24-1.67a10.8 10.8 0 0 1-1.95-.94l.48-.36c3.76 1.75 7.84 1.75 11.55 0l.49.36c-.62.37-1.27.68-1.96.94l1.24 1.67A16.9 16.9 0 0 0 22.74 17c.43-4.56-.74-8.5-3.2-11.98ZM8.92 14.73c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2 2 .99 2 2.2-.89 2.2-2 2.2Zm6.16 0c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2 2 .99 2 2.2-.89 2.2-2 2.2Z"/>
-      </svg>
-      <span>khushpree1</span>
-      <span class="arrow">↗</span>
-    </a>
+
+    <div class="system-status">
+      <i></i>
+      <span>SYS ONLINE</span>
+    </div>
   </header>
 
   <main id="top">
     <section class="hero" id="about">
       <div class="hero-copy">
-        <p class="eyebrow">PORTFOLIO // JASHAN</p>
-        <h1>JASHAN<span class="cursor">_</span></h1>
+        <p class="eyebrow">PERSONAL UNIT // JSH-01</p>
+        <h1>JASHAN<span class="slash">/</span></h1>
         <p class="role">ZEROORDER</p>
-        <p class="intro">messing with clicks.</p>
+        <div class="bio-panel">
+          <span class="panel-label">PILOT NOTE</span>
+          <p>I love cats</p>
+        </div>
 
         <div class="hero-actions">
-          <a class="btn primary" href="#specs">inspect setup <span>↓</span></a>
-          <a class="btn" href="#terminal">open terminal <span>↗</span></a>
+          <a class="mecha-btn primary" href="#projects"><span>01</span> VIEW PROJECTS <b>↘</b></a>
+          <a class="mecha-btn" href="#links"><span>02</span> OPEN LINKS <b>↘</b></a>
         </div>
       </div>
 
-      <div class="terminal-card mini-terminal">
-        <div class="window-bar">
-          <span><b></b><b></b><b></b></span>
-          <span>zeroorder@fedora:~</span>
-          <span>●</span>
+      <div class="core-panel">
+        <div class="panel-corner tl"></div><div class="panel-corner tr"></div>
+        <div class="panel-corner bl"></div><div class="panel-corner br"></div>
+
+        <div class="panel-head">
+          <span>UNIT STATUS</span>
+          <span>JSH-01 / 2026</span>
         </div>
-        <div class="terminal-body">
-          <p><span class="cyan">jashan</span>@<span class="blue">Dellfedora</span>:~$ fastfetch</p>
-          <div class="ascii-name" aria-label="Jashan">
-            <span>JASHAN</span>
-            <span class="ascii-glitch">JASHAN</span>
+
+        <div class="core-wrap">
+          <div class="core-ring ring-one"></div>
+          <div class="core-ring ring-two"></div>
+          <div class="core-ring ring-three"></div>
+          <div class="core">
+            <span>01</span>
+            <b>ONLINE</b>
           </div>
-          <div class="sys">
-            <div><span>OS</span> Fedora Linux 44</div>
-            <div><span>DE</span> KDE Plasma 6.7.4</div>
-            <div><span>WM</span> KWin (Wayland)</div>
-            <div><span>CPU</span> Intel Core i5-7440HQ</div>
-            <div><span>GPU</span> Intel HD Graphics 630</div>
-            <div><span>RAM</span> 8 GiB</div>
-            <div><span>DISK</span> 256 GB</div>
-          </div>
-          <p><span class="cyan">jashan</span>@<span class="blue">Dellfedora</span>:~$ <span class="blink">▋</span></p>
         </div>
+
+        <div class="readouts">
+          <div><span>MODE</span><strong>BUILD</strong></div>
+          <div><span>POWER</span><strong>87%</strong></div>
+          <div><span>LINK</span><strong>STABLE</strong></div>
+        </div>
+
+        <div class="warning"><i></i> ALL SYSTEMS NOMINAL</div>
       </div>
     </section>
 
-    <section class="section" id="specs">
+    <section class="section" id="stack">
       <div class="section-head">
         <span>01</span>
-        <div><p class="eyebrow">THE MACHINE</p><h2>SPECIFICATIONS</h2></div>
+        <div><p class="eyebrow">CURRENT LOADOUT</p><h2>STACK</h2></div>
       </div>
-      <div class="spec-grid">
-        <article class="spec"><span class="number">01</span><span class="label">PROCESSOR</span><h3>Intel Core i5-7440HQ</h3><p>4 cores / 4 threads · up to 3.80 GHz</p></article>
-        <article class="spec"><span class="number">02</span><span class="label">GRAPHICS</span><h3>Intel HD Graphics 630</h3><p>Integrated graphics · 1.00 GHz reported</p></article>
-        <article class="spec"><span class="number">03</span><span class="label">MEMORY</span><h3>8 GB RAM</h3><p>7.63 GiB usable</p></article>
-        <article class="spec"><span class="number">04</span><span class="label">STORAGE</span><h3>256 GB</h3><p>235.89 GiB filesystem · BTRFS</p></article>
-        <article class="spec"><span class="number">05</span><span class="label">DISPLAY</span><h3>1366 × 768</h3><p>14-inch · 60 Hz built-in panel</p></article>
-        <article class="spec"><span class="number">06</span><span class="label">SOFTWARE</span><h3>Fedora + KDE</h3><p>Fedora Linux 44 · Plasma 6.7.4 · Wayland</p></article>
-      </div>
-    </section>
 
-    <section class="section stack-section" id="stack">
-      <div class="section-head">
-        <span>02</span>
-        <div><p class="eyebrow">CURRENTLY MESSING WITH</p><h2>STACK</h2></div>
-      </div>
       <div class="stack-layout">
         <div class="stack-list">
-          <div class="stack-item"><strong>JS</strong><span>JavaScript</span><em>01</em></div>
-          <div class="stack-item"><strong>PHP</strong><span>PHP</span><em>02</em></div>
-          <div class="stack-item"><strong>HTML</strong><span>HTML</span><em>03</em></div>
-          <div class="stack-item"><strong>CSS</strong><span>CSS</span><em>04</em></div>
+          <div class="stack-item"><strong>JS</strong><span>JavaScript</span><em>CORE</em></div>
+          <div class="stack-item"><strong>PHP</strong><span>PHP</span><em>BACKEND</em></div>
+          <div class="stack-item"><strong>HTML</strong><span>HTML</span><em>FRAME</em></div>
+          <div class="stack-item"><strong>CSS</strong><span>CSS</span><em>STYLE</em></div>
         </div>
-        <div class="quote-card">
-          <span class="quote-mark">"</span>
-          <p>not trying to look like a finished developer. just building things and seeing what breaks.</p>
-          <small>— zeroorder</small>
+
+        <div class="mission-card">
+          <span class="panel-label">MISSION LOG</span>
+          <h3>BUILD. BREAK. REPEAT.</h3>
+          <p>Not trying to look like a finished developer. Just building things and seeing what breaks.</p>
+          <small>— ZEROORDER</small>
         </div>
       </div>
     </section>
 
-    <section class="section" id="terminal">
+    <section class="section projects-section" id="projects">
+      <div class="section-head">
+        <span>02</span>
+        <div><p class="eyebrow">ACTIVE MISSIONS</p><h2>PROJECTS</h2></div>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-id">PROJECT // 001</div>
+          <h3>PERSONAL SITE</h3>
+          <p>This interface. Built from scratch with HTML, CSS and JavaScript.</p>
+          <span class="project-state">ACTIVE</span>
+        </article>
+        <article class="project-card">
+          <div class="project-id">PROJECT // 002</div>
+          <h3>MINEVERSE</h3>
+          <p>Minecraft server work, configuration, hosting and maintenance.</p>
+          <span class="project-state">ONLINE</span>
+        </article>
+        <article class="project-card">
+          <div class="project-id">PROJECT // 003</div>
+          <h3>WEB BUILDS</h3>
+          <p>Small websites, experiments and whatever seems fun to build next.</p>
+          <span class="project-state">LOADING</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section links-section" id="links">
       <div class="section-head">
         <span>03</span>
-        <div><p class="eyebrow">COMMAND LINE</p><h2>TERMINAL</h2></div>
+        <div><p class="eyebrow">EXTERNAL CONNECTIONS</p><h2>LINKS</h2></div>
       </div>
-      <div class="terminal-card full-terminal">
-        <div class="window-bar">
-          <span><b></b><b></b><b></b></span>
-          <span>zeroorder@Dellfedora: ~</span>
-          <button id="clearTerminal">Clear</button>
-        </div>
-        <div class="terminal-output" id="output">
-          <div>Welcome to <strong>ZEROORDER CLI v1.0</strong></div>
-          <div>Type <span class="cyan">'help'</span> to see what this thing does.</div>
-          <br>
-          <div><span class="cyan">zeroorder</span>@Dellfedora:~$ <span>about</span></div>
-          <div class="muted">→ Jashan / ZeroOrder</div>
-          <div class="muted">→ messing with clicks</div>
-          <div class="muted">→ JavaScript · PHP · HTML · CSS</div>
-        </div>
-        <form class="terminal-input" id="terminalForm">
-          <span>zeroorder@Dellfedora:~$</span>
-          <input id="command" autocomplete="off" spellcheck="false" placeholder="type a command...">
-        </form>
+
+      <div class="link-grid">
+        <a class="link-card" href="https://discord.com/users/1391256641340575784" target="_blank" rel="noopener">
+          <span class="link-icon">◉</span>
+          <div><small>COMMUNICATION</small><strong>DISCORD</strong></div>
+          <b>↗</b>
+        </a>
+        <a class="link-card spotify" href="https://open.spotify.com/user/31nstdugvkqxblwlrwne67kkf64u" target="_blank" rel="noopener">
+          <span class="link-icon">◉</span>
+          <div><small>AUDIO SYSTEM</small><strong>SPOTIFY</strong></div>
+          <b>↗</b>
+        </a>
       </div>
-      <p class="command-hint">try: <button data-cmd="help">help</button>, <button data-cmd="about">about</button>, <button data-cmd="specs">specs</button>, <button data-cmd="stack">stack</button>, <button data-cmd="socials">socials</button>, <button data-cmd="clear">clear</button></p>
     </section>
   </main>
 
   <footer>
     <span>© 2026 JASHAN // ZEROORDER</span>
-    <span>built on Fedora, probably</span>
+    <span>UNIT JSH-01 · STATUS: ONLINE</span>
   </footer>
-  <script src="script.js"></script>
 </body>
 </html>
