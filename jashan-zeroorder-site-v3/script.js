@@ -65,6 +65,10 @@ function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3);
 }
 
+function easeOutQuint(t) {
+  return 1 - Math.pow(1 - t, 5);
+}
+
 const overviewSection = document.querySelector(".overview-section");
 const overviewCard = document.getElementById("overviewCard");
 const overviewBio = document.getElementById("overviewBio");
@@ -87,10 +91,17 @@ function renderOverview(progress) {
   if (!overviewSection || !overviewCard) return;
 
   const raw = clamp(progress, 0, 1);
-  const popP = easeOutCubic(clamp(raw / 0.65, 0, 1));
+  // Give the card a liquid, wave-like entrance: it rises smoothly while
+  // the top edge starts slightly rounded and settles flat as it arrives.
+  const popP = easeOutQuint(clamp(raw / 0.72, 0, 1));
   const y = 100 * (1 - popP);
+  const wave = Math.sin(popP * Math.PI);
+  const radius = 52 * wave;
+  const scale = 1 + (0.012 * wave);
 
   overviewCard.style.setProperty("--ov-y", `${y}%`);
+  overviewCard.style.setProperty("--ov-radius", `${radius}px`);
+  overviewCard.style.setProperty("--ov-scale", String(scale));
 
   const chipP = easeOutCubic(clamp((raw - 0.4) / 0.35, 0, 1));
   overviewCard.style.setProperty("--ov-chip", String(chipP));
