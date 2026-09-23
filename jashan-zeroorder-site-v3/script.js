@@ -73,34 +73,22 @@ const overviewSection = document.querySelector(".overview-section");
 const overviewCard = document.getElementById("overviewCard");
 const overviewBio = document.getElementById("overviewBio");
 
-let overviewTarget = 0;
-let overviewProgress = 0;
-let overviewAnimating = false;
-
 function getOverviewProgress() {
   if (!overviewSection) return 0;
   const rect = overviewSection.getBoundingClientRect();
-  const sectionH = overviewSection.offsetHeight;
-  const viewH = window.innerHeight;
-  const total = sectionH - viewH;
+  const total = overviewSection.offsetHeight - window.innerHeight;
   if (total <= 0) return 0;
-  return clamp(-rect.top, 0, total) / total;
+  return clamp(-rect.top / total, 0, 1);
 }
 
 function renderOverview(progress) {
   if (!overviewSection || !overviewCard) return;
 
   const raw = clamp(progress, 0, 1);
-  // Keep the card physically simple. The smoothness comes from the
-  // scroll interpolation below, while the reveal eases in without a
-  // visible pop, stretch, or artificial wave.
-  const reveal = easeOutQuint(clamp(raw / 0.78, 0, 1));
-  const y = 100 * (1 - reveal);
-  const radius = 10 * (1 - reveal);
+  const reveal = easeOutCubic(clamp(raw / 0.72, 0, 1));
 
-  overviewCard.style.setProperty("--ov-y", `${y}%`);
-  overviewCard.style.setProperty("--ov-radius", `${radius}px`);
-  overviewCard.style.setProperty("--ov-scale", "1");
+  // Simple scroll-linked reveal: no deformation, no smoothing loop, no lag.
+  overviewCard.style.setProperty("--ov-y", `${100 * (1 - reveal)}%`);
   overviewCard.style.setProperty("--ov-opacity", String(clamp(reveal * 1.08, 0, 1)));
 
   const chipP = easeOutCubic(clamp((raw - 0.4) / 0.35, 0, 1));
@@ -110,51 +98,16 @@ function renderOverview(progress) {
     const bioP = easeOutCubic(clamp((raw - 0.55) / 0.4, 0, 1));
     const isMobile = window.innerWidth <= 800;
 
-    if (isMobile) {
-      overviewBio.style.setProperty("--bio-x", "0%");
-      overviewBio.style.setProperty("--bio-y", `${40 * (1 - bioP)}px`);
-    } else {
-      overviewBio.style.setProperty("--bio-x", `${120 * (1 - bioP)}%`);
-      overviewBio.style.setProperty("--bio-y", `${24 * (1 - bioP)}px`);
-    }
-
+    overviewBio.style.setProperty("--bio-x", isMobile ? "0%" : `${120 * (1 - bioP)}%`);
+    overviewBio.style.setProperty("--bio-y", isMobile ? `${40 * (1 - bioP)}px` : `${24 * (1 - bioP)}px`);
     overviewBio.style.setProperty("--bio-opacity", String(bioP));
   }
 }
 
-function animateOverview() {
-  const delta = overviewTarget - overviewProgress;
-
-  // Ease toward the scroll position instead of snapping directly to it.
-  // This makes partial/slow scrolling feel continuous rather than popping.
-  overviewProgress += delta * 0.18;
-
-  if (Math.abs(delta) < 0.001) {
-    overviewProgress = overviewTarget;
-  }
-
-  renderOverview(overviewProgress);
-
-  if (overviewProgress !== overviewTarget) {
-    requestAnimationFrame(animateOverview);
-  } else {
-    overviewAnimating = false;
-  }
-}
-
 function updateOverview() {
-  overviewTarget = getOverviewProgress();
-
-  if (!overviewAnimating) {
-    overviewAnimating = true;
-    requestAnimationFrame(animateOverview);
-  }
+  renderOverview(getOverviewProgress());
 }
 
-function onScroll() {
-  updateOverview();
-}
-
-window.addEventListener("scroll", onScroll, { passive: true });
-window.addEventListener("resize", onScroll);
+window.addEventListener("scroll", updateOverview, { passive: true });
+window.addEventListener("resize", updateOverview);
 updateOverview();

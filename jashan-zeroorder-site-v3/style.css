@@ -399,11 +399,10 @@ h1 { font-size: clamp(58px, 9vw, 118px); line-height: 0.86; margin: 0; letter-sp
     linear-gradient(160deg, #171311 0%, #1d1714 55%, #261a15 100%);
   color: #fff;
   box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.3);
-  transform: translate3d(0, var(--ov-y, 100%), 0) scaleX(var(--ov-scale, 1));
-  transform-origin: 50% 100%;
+  transform: translate3d(0, var(--ov-y, 100%), 0);
   opacity: var(--ov-opacity, 1);
-  will-change: transform, border-radius, clip-path;
-  border-radius: var(--ov-radius, 0px) var(--ov-radius, 0px) 0 0;
+  will-change: transform, opacity;
+  border-radius: 0;
   overflow: hidden;
 }
 [data-theme="light"] .overview-card {
