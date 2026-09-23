@@ -69,18 +69,24 @@ const overviewSection = document.querySelector(".overview-section");
 const overviewCard = document.getElementById("overviewCard");
 const overviewBio = document.getElementById("overviewBio");
 
-function updateOverview() {
-  if (!overviewSection || !overviewCard) return;
+let overviewTarget = 0;
+let overviewProgress = 0;
+let overviewAnimating = false;
 
+function getOverviewProgress() {
+  if (!overviewSection) return 0;
   const rect = overviewSection.getBoundingClientRect();
   const sectionH = overviewSection.offsetHeight;
   const viewH = window.innerHeight;
   const total = sectionH - viewH;
-  if (total <= 0) return;
+  if (total <= 0) return 0;
+  return clamp(-rect.top, 0, total) / total;
+}
 
-  const scrolled = clamp(-rect.top, 0, total);
-  const raw = scrolled / total;
+function renderOverview(progress) {
+  if (!overviewSection || !overviewCard) return;
 
+  const raw = clamp(progress, 0, 1);
   const popP = easeOutCubic(clamp(raw / 0.65, 0, 1));
   const y = 100 * (1 - popP);
 
@@ -92,6 +98,7 @@ function updateOverview() {
   if (overviewBio) {
     const bioP = easeOutCubic(clamp((raw - 0.55) / 0.4, 0, 1));
     const isMobile = window.innerWidth <= 800;
+
     if (isMobile) {
       overviewBio.style.setProperty("--bio-x", "0%");
       overviewBio.style.setProperty("--bio-y", `${40 * (1 - bioP)}px`);
@@ -99,18 +106,42 @@ function updateOverview() {
       overviewBio.style.setProperty("--bio-x", `${120 * (1 - bioP)}%`);
       overviewBio.style.setProperty("--bio-y", `${24 * (1 - bioP)}px`);
     }
+
     overviewBio.style.setProperty("--bio-opacity", String(bioP));
   }
 }
 
-let ticking = false;
+function animateOverview() {
+  const delta = overviewTarget - overviewProgress;
+
+  // Ease toward the scroll position instead of snapping directly to it.
+  // This makes partial/slow scrolling feel continuous rather than popping.
+  overviewProgress += delta * 0.14;
+
+  if (Math.abs(delta) < 0.001) {
+    overviewProgress = overviewTarget;
+  }
+
+  renderOverview(overviewProgress);
+
+  if (overviewProgress !== overviewTarget) {
+    requestAnimationFrame(animateOverview);
+  } else {
+    overviewAnimating = false;
+  }
+}
+
+function updateOverview() {
+  overviewTarget = getOverviewProgress();
+
+  if (!overviewAnimating) {
+    overviewAnimating = true;
+    requestAnimationFrame(animateOverview);
+  }
+}
+
 function onScroll() {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => {
-    updateOverview();
-    ticking = false;
-  });
+  updateOverview();
 }
 
 window.addEventListener("scroll", onScroll, { passive: true });
