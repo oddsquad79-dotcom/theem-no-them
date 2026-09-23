@@ -13,7 +13,7 @@ function getPreferredTheme() {
 function applyTheme(theme) {
   root.setAttribute("data-theme", theme);
   if (themeMeta) {
-    themeMeta.setAttribute("content", theme === "light" ? "#fff7ed" : "#0c0a09");
+    themeMeta.setAttribute("content", theme === "light" ? "#ecf0f1" : "#15202b");
   }
 }
 
@@ -65,31 +65,26 @@ function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-function easeOutQuint(t) {
-  return 1 - Math.pow(1 - t, 5);
-}
-
 const overviewSection = document.querySelector(".overview-section");
 const overviewCard = document.getElementById("overviewCard");
 const overviewBio = document.getElementById("overviewBio");
 
-function getOverviewProgress() {
-  if (!overviewSection) return 0;
-  const rect = overviewSection.getBoundingClientRect();
-  const total = overviewSection.offsetHeight - window.innerHeight;
-  if (total <= 0) return 0;
-  return clamp(-rect.top / total, 0, 1);
-}
-
-function renderOverview(progress) {
+function updateOverview() {
   if (!overviewSection || !overviewCard) return;
 
-  const raw = clamp(progress, 0, 1);
-  const reveal = easeOutCubic(clamp(raw / 0.72, 0, 1));
+  const rect = overviewSection.getBoundingClientRect();
+  const sectionH = overviewSection.offsetHeight;
+  const viewH = window.innerHeight;
+  const total = sectionH - viewH;
+  if (total <= 0) return;
 
-  // Simple scroll-linked reveal: no deformation, no smoothing loop, no lag.
-  overviewCard.style.setProperty("--ov-y", `${100 * (1 - reveal)}%`);
-  overviewCard.style.setProperty("--ov-opacity", String(clamp(reveal * 1.08, 0, 1)));
+  const scrolled = clamp(-rect.top, 0, total);
+  const raw = scrolled / total;
+
+  const popP = easeOutCubic(clamp(raw / 0.65, 0, 1));
+  const y = 100 * (1 - popP);
+
+  overviewCard.style.setProperty("--ov-y", `${y}%`);
 
   const chipP = easeOutCubic(clamp((raw - 0.4) / 0.35, 0, 1));
   overviewCard.style.setProperty("--ov-chip", String(chipP));
@@ -97,17 +92,27 @@ function renderOverview(progress) {
   if (overviewBio) {
     const bioP = easeOutCubic(clamp((raw - 0.55) / 0.4, 0, 1));
     const isMobile = window.innerWidth <= 800;
-
-    overviewBio.style.setProperty("--bio-x", isMobile ? "0%" : `${120 * (1 - bioP)}%`);
-    overviewBio.style.setProperty("--bio-y", isMobile ? `${40 * (1 - bioP)}px` : `${24 * (1 - bioP)}px`);
+    if (isMobile) {
+      overviewBio.style.setProperty("--bio-x", "0%");
+      overviewBio.style.setProperty("--bio-y", `${40 * (1 - bioP)}px`);
+    } else {
+      overviewBio.style.setProperty("--bio-x", `${120 * (1 - bioP)}%`);
+      overviewBio.style.setProperty("--bio-y", `${24 * (1 - bioP)}px`);
+    }
     overviewBio.style.setProperty("--bio-opacity", String(bioP));
   }
 }
 
-function updateOverview() {
-  renderOverview(getOverviewProgress());
+let ticking = false;
+function onScroll() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    updateOverview();
+    ticking = false;
+  });
 }
 
-window.addEventListener("scroll", updateOverview, { passive: true });
-window.addEventListener("resize", updateOverview);
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("resize", onScroll);
 updateOverview();
