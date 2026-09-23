@@ -91,17 +91,17 @@ function renderOverview(progress) {
   if (!overviewSection || !overviewCard) return;
 
   const raw = clamp(progress, 0, 1);
-  // Give the card a liquid, wave-like entrance: it rises smoothly while
-  // the top edge starts slightly rounded and settles flat as it arrives.
-  const popP = easeOutQuint(clamp(raw / 0.72, 0, 1));
-  const y = 100 * (1 - popP);
-  const wave = Math.sin(popP * Math.PI);
-  const radius = 52 * wave;
-  const scale = 1 + (0.012 * wave);
+  // Keep the card physically simple. The smoothness comes from the
+  // scroll interpolation below, while the reveal eases in without a
+  // visible pop, stretch, or artificial wave.
+  const reveal = easeOutQuint(clamp(raw / 0.78, 0, 1));
+  const y = 100 * (1 - reveal);
+  const radius = 10 * (1 - reveal);
 
   overviewCard.style.setProperty("--ov-y", `${y}%`);
   overviewCard.style.setProperty("--ov-radius", `${radius}px`);
-  overviewCard.style.setProperty("--ov-scale", String(scale));
+  overviewCard.style.setProperty("--ov-scale", "1");
+  overviewCard.style.setProperty("--ov-opacity", String(clamp(reveal * 1.08, 0, 1)));
 
   const chipP = easeOutCubic(clamp((raw - 0.4) / 0.35, 0, 1));
   overviewCard.style.setProperty("--ov-chip", String(chipP));
@@ -127,7 +127,7 @@ function animateOverview() {
 
   // Ease toward the scroll position instead of snapping directly to it.
   // This makes partial/slow scrolling feel continuous rather than popping.
-  overviewProgress += delta * 0.14;
+  overviewProgress += delta * 0.18;
 
   if (Math.abs(delta) < 0.001) {
     overviewProgress = overviewTarget;
